@@ -19,7 +19,7 @@ while(defined($currentDay = <STDIN>))
 	{
 		$noRainfallDays += 1;
 	}
-	elsif($currentDay == 999.9)
+	elsif($currentDay == 999.99)
 	{
 		$missingRainfallDataDays += 1;
 	}

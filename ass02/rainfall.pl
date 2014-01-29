@@ -10,7 +10,7 @@ $missingRainfallDataDays = 0;
 
 open ($RAINFALL, "<", "2012rain.txt");
 
-while(<$RAINFALL>)
+while(<$>)
 {
 	chomp;
 	

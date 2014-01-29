@@ -8,7 +8,9 @@ $traceRainfallDays = 0;
 $noRainfallDays = 0;
 $missingRainfallDataDays = 0;
 
-while(<STDIN>)
+open ($RAINFALL, "<", "2012rain.txt");
+
+while(<$RAINFALL>)
 {
 	chomp;
 	

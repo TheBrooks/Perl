@@ -1,5 +1,6 @@
 #! /usr/bin/perl
 
+use v5.10;
 
 $totalRainfall = 0;
 $positiveRainfallDays = 0;
@@ -7,26 +8,15 @@ $traceRainfallDays = 0;
 $noRainfallDays = 0;
 $missingRainfallDataDays = 0;
 
-while(defined($currentDay = <STDIN>))
+while(<STDIN>)
 {
-	chomp($currentDay);
+	chomp;
 	
-	if($currentDay eq "T")
-	{
-		$traceRainfallDays += 1;
-	}
-	elsif($currentDay == '0')
-	{
-		$noRainfallDays += 1;
-	}
-	elsif($currentDay == 999.99)
-	{
-		$missingRainfallDataDays += 1;
-	}
-	else
-	{
-		$positiveRainfallDays += 1;
-		$totalRainfall += $currentDay;
+	given($_){
+		when('T') { $traceRainfallDays += 1;}
+		when('0') {$noRainfallDays += 1;}
+		when('999.99'){$missingRainfallDataDays += 1;}
+		default{$positiveRainfallDays += 1; $totalRainfall += $_;}
 	}
 }
 

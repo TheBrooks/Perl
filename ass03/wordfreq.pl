@@ -34,8 +34,30 @@ while(<>)
 	
 }
 
-foreach my $key (keys %wordCount) 
+if($debug)
 {
-	$v = $wordCount{$key};
-	print "$key : $v\n";
-} 
+	foreach my $key (keys %wordCount) 
+	{
+		$v = $wordCount{$key};
+		print "$key : $v\n";
+	} 
+}
+
+@sortedWords = sort {$wordCount{$a} <=> $wordCount{$b} and $a cmp $b} keys (%wordCount); 
+for( i= 0; i < 10; i++)
+{
+	printf "$sortedWords[i]: %i,\n", $wordCount{$sortedWords};
+}
+
+
+for (@dictWords)
+{
+	delete $wordCount{$_};
+}
+
+
+@sortedWords = sort {$wordCount{$a} <=> $wordCount{$b} and $a cmp $b} keys (%wordCount); 
+for( i= 0; i < 10; i++)
+{	
+	printf "$sortedWords[i]: %i,\n", $wordCount{$sortedWords}; 
+}

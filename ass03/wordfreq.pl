@@ -13,7 +13,7 @@ while(<WORDS>)
 	push(@dictWords, map { lc } $_);
 }
 
-if ($debug)
+if ($debug > 1)
 {
 	for( @dictWords)
 	{
@@ -43,10 +43,12 @@ if($debug)
 	} 
 }
 
-@sortedWords = sort {$wordCount{$a} <=> $wordCount{$b} and $a cmp $b} keys (%wordCount); 
-for( i= 0; i < 10; i++)
+print "\n\nsorting\n\n\n" if ($debug);
+@sortedWords = sort { $wordCount{$b} <=> $wordCount{$a} or $a cmp $b} keys %wordCount; 
+
+for( $i= 0; $i < 10; $i++)
 {
-	printf "$sortedWords[i]: %i,\n", $wordCount{$sortedWords};
+	printf "$sortedWords[$i]: %i,\n", $wordCount{$sortedWords[$i]};
 }
 
 
@@ -54,10 +56,10 @@ for (@dictWords)
 {
 	delete $wordCount{$_};
 }
-
-
-@sortedWords = sort {$wordCount{$a} <=> $wordCount{$b} and $a cmp $b} keys (%wordCount); 
-for( i= 0; i < 10; i++)
+print "\n";
+print "\n\n\n\nuncommon \n\n\n\n\n" if ($debug);
+@sortedWords = sort {$wordCount{$b} <=> $wordCount{$a} or $a cmp $b} keys (%wordCount); 
+for( $i= 0; $i < 10; $i++)
 {	
-	printf "$sortedWords[i]: %i,\n", $wordCount{$sortedWords}; 
+	printf "$sortedWords[$i]: %i,\n", $wordCount{$sortedWords[$i]}; 
 }

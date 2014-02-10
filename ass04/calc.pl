@@ -10,18 +10,21 @@ our @stack = ();
 while(<>)
 {
 	chomp;
+
+	#do some reading and printing still
+
 	given($_) {
-		when ('+') {push @stack, (pop @stack + pop @stack);}
-		when ('-') {$right = pop @stack;  push @stack, (pop @stack - right);}
-		when ('/') {$right = pop @stack;  push @stack, (pop @stack / right);}
-		when ('*') {push @stack, (pop @stack * pop @stack);}
+		when ('+') {push our @stack, (pop our @stack + pop our @stack);}
+		when ('-') {$right = pop our @stack;  push our @stack, (pop our @stack - $right);}
+		when ('/') {$right = pop our @stack;  push our @stack, (pop our @stack / $right);}
+		when ('*') {push our @stack, (pop our @stack * pop our @stack);}
 		when ('sqrt') { &sqrt();}
 		when ('sum') {&sum();}
 		when ('mean') {&mean();}
 		when ('squares') {&squares();}
 		when ('residuals') {&residuals();}
 		when ('stddev') {&stddev();}
-		default { push @stack, $_} #push operand
+		default { push our @stack, $_} #push operand
 	}
 
 }
@@ -33,37 +36,29 @@ sub sqrt
 
 sub sum {
 	# body...
-	$stackSum = 0;
-	while(@stack)
-		$stackSum += pop @stack;
-	push @stack, $stackSum;
+	undef our @stack;
+	push our @stack, &calcSum();
 }
 
 sub mean {
 	# body...
 	#Replace the stack with the arithmetic mean of all the numbers that were on the stack. This value should 
 	#be equal to the sum of all the numbers divided by the size of the stack.
-	$stackDiv = scalar @stack;
-	&sum();
-	$stack[0] /= $stackDiv; 
+	$stackMean = &calcMean();
+	undef our @stack;
+	push our @stack, $stackMean; 
 }
 
 sub squares{
 	#Multiply each number on the stack by itself.
-	for($operand (our @stack)) { $operand *= $operand; }
+	for(our @stack) { $_ *= $_; }
 }
 
 sub residuals {
 	# body...
 	#Subtract from each number on the stack the mean of all the numbers on the stack.
-	$stackSum = 0;
-	for(@stack)
-	{
-		stackSum += &_
-	}
-	$stackDiv = scalar @stack;
-	$mean = $stackSum/$stackDiv;
-	for(@stack){ $_ -= $mean }
+	$mean = &calcMean();
+	for(our @stack){ $_ -= $mean }
 }
 
 sub stddev {
@@ -74,4 +69,14 @@ sub stddev {
 	&squares();
 	&mean();
 	&sqrt();
+}
+
+sub calcSum{
+	$stackSum = 0;
+	for(our @stack) { $stackSum += &_ }
+	return $stackSum;
+}
+
+sub calcMean {
+	return &calcSum / scalar our @stack;
 }

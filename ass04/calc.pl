@@ -14,16 +14,16 @@ while(<>)
 	#do some reading and printing still
 
 	given($_) {
-		when ('+') {push our @stack, (pop our @stack + pop our @stack); print ("@stack");}
-		when ('-') {$right = pop our @stack;  push our @stack, (pop our @stack - $right); print ("@stack");}
-		when ('/') {$right = pop our @stack;  push our @stack, (pop our @stack / $right); print ("@stack");}
+		when ('+') {push our @stack, (pop our @stack + pop our @stack); print ("Stack: @stack");}
+		when ('-') {$right = pop our @stack;  push our @stack, (pop our @stack - $right); print ("Stack: @stack");}
+		when ('/') {$right = pop our @stack;  push our @stack, (pop our @stack / $right); print ("Stack: @stack");}
 		when ('*') {push our @stack, (pop our @stack * pop our @stack); print ("@stack");}
-		when ('sqrt') { &sqrt(); print ("@stack");}
-		when ('sum') {&sum(); print ("@stack");}
-		when ('mean') {&mean(); print ("@stack");}
-		when ('squares') {&squares(); print ("@stack");}
-		when ('residuals') {&residuals(); print ("@stack");}
-		when ('stddev') {&stddev();  print ("@stack");}
+		when ('sqrt') { &sqrt(); print ("Stack: @stack");}
+		when ('sum') {&sum(); print ("Stack: @stack");}
+		when ('mean') {&mean(); print ("Stack: @stack");}
+		when ('squares') {&squares(); print ("Stack: @stack");}
+		when ('residuals') {&residuals(); print ("Stack: @stack");}
+		when ('stddev') {&stddev();  print ("Stack: @stack");}
 		default { push our @stack, $_} #push operand
 	}
 

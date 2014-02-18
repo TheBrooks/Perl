@@ -1,31 +1,31 @@
 #! /usr/bin/perl
 use v5.10;
-our @stack;
+my @stack;
 
 sub sqrt{
     
-	push @stack, sqrt (pop our @stack);
+	push @stack, sqrt (pop @stack);
 }
 
 sub sum {
     $stackSum = &calcSum();
-	undef our @stack;
-	push our @stack, $stackSum;
+	undef @stack;
+	push @stack, $stackSum;
 }
 
 sub mean {
 	$stackMean = &calcMean();
-	undef our @stack;
-	push our @stack, $stackMean; 
+	undef @stack;
+	push @stack, $stackMean; 
 }
 
 sub squares{
-	for(our @stack) { $_ *= $_; }
+	for(@stack) { $_ *= $_; }
 }
 
 sub residuals {
 	$mean = &calcMean();
-	for(our @stack){ $_ -= $mean }
+	for(@stack){ $_ -= $mean }
 }
 
 sub stddev {
@@ -37,33 +37,33 @@ sub stddev {
 
 sub calcSum{
 	$stackSum = 0;
-	for(our @stack) { $stackSum += $_ }
+	for(@stack) { $stackSum += $_ }
 	return $stackSum;
 }
 
 sub calcMean {
-	return &calcSum() / scalar our @stack;
+	return &calcSum() / scalar @stack;
 }
 
 while(<>)
 {
 	chomp;
 	given($_) {
-		when ('+') {$right = pop our @stack;
-                    $left = pop our @stack ;
-                    push our @stack, ($left + $right) ;
+		when ('+') {$right = pop @stack;
+                    $left = pop @stack ;
+                    push @stack, ($left + $right) ;
                     print ("Stack: @stack\n");}
-		when ('-') {$right = pop our @stack;
-                    $left = pop our @stack ;
-                    push our @stack, ($left - $right) ;
+		when ('-') {$right = pop @stack;
+                    $left = pop @stack ;
+                    push @stack, ($left - $right) ;
                     print ("Stack: @stack\n");}
-		when ('/') {$right = pop (our @stack);
-                    $left =  pop (our @stack);
-                    push our @stack, ($left / $right) ;
+		when ('/') {$right = pop (@stack);
+                    $left =  pop (@stack);
+                    push @stack, ($left / $right) ;
                     print ("Stack: @stack\n");}
-		when ('*') {$right = pop our @stack;
-                    $left = pop our @stack ;
-                    push our @stack, ($left * $right) ;
+		when ('*') {$right = pop @stack;
+                    $left = pop @stack ;
+                    push @stack, ($left * $right) ;
                     print ("Stack: @stack\n");}
 		when ('sqrt') { &sqrt(); print ("Stack: @stack\n");}
 		when ('sum') {&sum(); print ("Stack: @stack\n");}

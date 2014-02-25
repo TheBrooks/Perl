@@ -16,37 +16,39 @@ use warnings;
 
 sub new {
     my $class = shift;
-    my $self  = { _matrix => shift };
+    my $self  = [];
     return bless  $self, $class;
 }
 
 sub add_row {
-	@matrix = $self->{_matrix};
+	my $self = shift;
+	@matrix = $self;
 	@newRow = split(" ",pop(@_));
 	push (@matrix , @newRow);
 }
 
 sub myadd {
-
+	my $self = shift;
 }
 
 sub mysub {
-
+	my $self = shift;
 }
 
 sub mymulti {
-	
+	my $self = shift;
 }
 
 sub string {
-	@matrix = $self->{_matrix};
+	my $self = shift;
 	$string = ""
-	for($row (@matrix)){
+	for($row (@$self)){
 		$string .= "@$row\n";
 	}
 	return $string
 }
 
 sub print {
+	my $self = shift;
 	print $self->&string();
 }

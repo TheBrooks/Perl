@@ -4,7 +4,7 @@ use v5.10;
 $debug = 0;
 
 while(<>){
-	@emails_in_line = /(?<!\S)[aA-zZ0-9-_]+(?:\.[aA-zZ0-9-_]+)?@[aA-zZ0-9-_]+(?:\.[aA-zZ0-9-_]+)?\b/gx;
+	chomp;
 	foreach(@emails_in_line) 
 	{ 
 		$emailCount{$_}++; 

@@ -18,13 +18,13 @@ sub new {
     my $class = shift;
     my $self  = [];
     for($row (@_))
-    	$self->&add_row(@$row);
+    	$self->&add_row(@{$row});
     return bless  $self, $class;
 }
 
 sub add_row {
 	my $self = shift;
-	@newRow = split(" ",shift);
+	@newRow = shift;
 	push (@{$self} , @newRow);
 }
 
@@ -48,12 +48,9 @@ sub myadd {
 	my $width = $self->getWidth();
 
 	for my $i(0..($height - 1)){
-		$newRow = "";
 		for my $j (0..($width - 1)){
-			$newIndex = $self->[i][j] + $rhs->[i][j]
-			$newRow .= " $newIndex ";
+			$returnMatrix->[i][j] = $self->[i][j] + $rhs->[i][j]
 		}
-		$returnMatrix -> add_row($newRow)
 	}
 	return $returnMatrix;
 }
@@ -61,6 +58,19 @@ sub myadd {
 
 sub mysub {
 	my $self = shift;
+	my $rhs = shift;
+	my $returnMatrix = $self->new();
+
+	#need to get width and height
+	my $height = $self->getHeight();
+	my $width = $self->getWidth();
+
+	for my $i(0..($height - 1)){
+		for my $j (0..($width - 1)){
+			$returnMatrix->[i][j] = $self->[i][j] - $rhs->[i][j]
+		}
+	}
+	return $returnMatrix;
 }
 
 sub mymulti {

@@ -4,8 +4,8 @@ use matrix;
 
 $debug = 0;
 
-#matrix1 = matrix->new();
-#matrix2 = matrix->new();
+$matrix1 =  matrix->new();
+$matrix2 = matrix->new();
 $firstMatrixRead = 1;
 while(<>){
 	chomp;
@@ -13,28 +13,29 @@ while(<>){
 	if($firstMatrixRead){
 		if(@matrixRow)
 		{
-			@matrix1->add_row(@matrixRow)
+			$matrix1->add_row(@matrixRow)
 		}
 		else
 		{
-			firstMatrixRead = 0;
+			$firstMatrixRead = 0;
 		}
 	}
 	else
 	{
 		if(@matrixRow)
 		{
-			@matrix2->add_row(@matrixRow)
+			$matrix2->add_row(@matrixRow)
 		}
 		else
 		{
-			firstMatrixRead = 0;
-			@returnMatrix = (@matrix1 - @matrix2);
-			@returnMatrix -> &print();
+			$firstMatrixRead = 1;
+			$returnMatrix = ($matrix1 - $matrix2);
+
+			$returnMatrix ->print();
+			print "\n";
+			$matrix1 = matrix->new();
+			$matrix2 = matrix->new();
 		}
 	}
 }
 
-@sortedEmails = sort { $emailCount{$b} <=> $emailCount{$a} or $a cmp $b} keys %emailCount; 
-printf "Number of distinct words: %i\n",scalar(@sortedEmails);
-for($i= 0; $i < scalar(@sortedEmails); $i++) { printf "$sortedEmails[$i]: (%i)\n", $emailCount{$sortedEmails[$i]}; }

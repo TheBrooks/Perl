@@ -4,28 +4,46 @@ package matrix;
 
 use v5.10;
 
-$debug = 0;
+#use strict;
+#use warnings;
 
-use strict;
-use warnings;
-
- use overload
+use overload
 	'+' => 'myadd',
 	'-' => 'mysub',
 	'*' => 'mymulti';
 
 sub new {
-    my $class = shift;
+    my $that = shift;
+    my $class = ref($that) || $that;
     my $self  = [];
-    for($row (@_))
-    	$self->&add_row(@{$row});
-    return bless  $self, $class;
+    if(@_)
+	{
+	    for my $row ( @_ ) 
+	    {
+			push (@{$self} , [@{$row}]);	
+	    }
+	}
+	return bless $self, $class;
+}
+
+sub copy {
+    my $other = shift;
+    my $class = ref($other) || $other;
+    my $self = [];
+    if(@_)
+    {
+    	for my $row (@{$other}) 
+    	{
+        	push(@{$self}, [@{$row}]);
+    	}
+    }
+    bless $self, $class;
 }
 
 sub add_row {
-	my $self = shift;
-	@newRow = shift;
-	push (@{$self} , @newRow);
+	my $self = shift; 
+	my @newRow = @_;
+	push (@{$self} , [@newRow]);
 }
 
 sub getHeight {
@@ -49,7 +67,7 @@ sub myadd {
 
 	for my $i(0..($height - 1)){
 		for my $j (0..($width - 1)){
-			$returnMatrix->[i][j] = $self->[i][j] + $rhs->[i][j]
+			$returnMatrix->[$i][$j] = $self->[$i][$j] + $rhs->[$i][$j];
 		}
 	}
 	return $returnMatrix;
@@ -67,7 +85,7 @@ sub mysub {
 
 	for my $i(0..($height - 1)){
 		for my $j (0..($width - 1)){
-			$returnMatrix->[i][j] = $self->[i][j] - $rhs->[i][j]
+			$returnMatrix->[$i][$j] = $self->[$i][$j] - $rhs->[$i][$j];
 		}
 	}
 	return $returnMatrix;
@@ -75,18 +93,40 @@ sub mysub {
 
 sub mymulti {
 	my $self = shift;
+	my $rhs = shift;
+	my $returnMatrix = $self->new();
+
+	#need to get width and height
+	my $height = $self->getHeight();
+	my $width = $self->getWidth();
+
+	for my $i(0..($height - 1)){
+		for my $j (0..($width - 1)){
+			for my $k (0..$width -1){
+				$returnMatrix->[$i][$j] += $self->[$i][$k] * $rhs->[$k][$j];
+			}
+		}
+	}
+	return $returnMatrix;
 }
 
 sub string {
 	my $self = shift;
-	$string = ""
-	for($row (@$self)){
-		$string .= "@$row\n";
+	my $pstring = "";
+	for my $row (@{$self})
+	{
+		for my $index (@{$row}){
+			$pstring .= " $index ";
+		}
+		$pstring .= "\n";
 	}
-	return $string
+	return $pstring;
 }
 
 sub print {
 	my $self = shift;
-	print $self->&string();
+	print $self->string();
+
 }
+
+return 1;
